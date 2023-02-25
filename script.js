@@ -4,6 +4,12 @@ $(document).ready(function(){
   var interval;
   var timeLeft = 10;
   var score = 0;
+  var slider = document.getElementById("slider");
+
+  slider.addEventListener("input", () => {
+    var sliderValue = slider.value;
+    restartGame();
+  });
 
 
   // generate a random number from 1 to 10
@@ -12,10 +18,10 @@ $(document).ready(function(){
   }
   
   // generate an equation question using 2 random numbers from 1 to 10
-  var questionGenerator = function () {
+  var questionGenerator = function (sliderValue) {
     var question = {};
-    var num1 = randomNumberGenerator(10);
-    var num2 = randomNumberGenerator(10);
+    var num1 = randomNumberGenerator(sliderValue);
+    var num2 = randomNumberGenerator(sliderValue);
     
     question.answer = num1 + num2;
     question.equation = String(num1) + " + " + String(num2);
@@ -49,7 +55,7 @@ $(document).ready(function(){
 
   // inject current question to DOM and create new question when input = answer
   var renderNewQuestion = function () {
-    currentQuestion = questionGenerator();
+    currentQuestion = questionGenerator(slider.value);
     $('#equation').text(currentQuestion.equation);  
   }
   
@@ -67,6 +73,17 @@ $(document).ready(function(){
     score += amount;
     $('#score').text(score);
   };
+
+  // restart game when slider value changes
+  var restartGame = function () {
+    clearInterval(interval);
+    interval = undefined;
+    timeLeft = 10;
+    score = 0;
+    updateScore(score);
+    updateTimeLeft(0);
+    renderNewQuestion();
+  }
   
   $('#user-input').on('keyup', function () {
     startGame();
@@ -76,3 +93,4 @@ $(document).ready(function(){
   renderNewQuestion();
 
 });
+
