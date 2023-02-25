@@ -19,17 +19,22 @@ $(document).ready(function(){
     return question;
   }
   
-  // inject current question to DOM
-  currentQuestion = questionGenerator();
-  $('#equation').text(currentQuestion.equation);
-
+  // inject current question to DOM and create new question when input = answer
+  var renderNewQuestion = function () {
+    currentQuestion = questionGenerator();
+    $('#equation').text(currentQuestion.equation);  
+  }
+  
   var checkAnswer = function (userInput, answer) {
-    console.log(userInput === answer);
+    if(userInput === answer) {
+      renderNewQuestion();
+    }
   }
   
   $('#user-input').on('keyup', function () {
     checkAnswer(Number($(this).val()), currentQuestion.answer);
   });
-
+  
+  renderNewQuestion();
 
 });
