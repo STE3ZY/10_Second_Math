@@ -22,12 +22,18 @@ $(document).ready(function(){
   // 10 second timer
   var timeLeft = 10;
   var interval = setInterval(function () {
-    timeLeft--;
+    updateTimeLeft(-1);
     $('#time-left').text(timeLeft);
     if (timeLeft === 0) {
       clearInterval(interval);
     }
   }, 1000);
+
+  // add one second when user gives right answer
+  var updateTimeLeft = function (amount) {
+    timeLeft += amount;
+    $('#time-left').text(timeLeft);
+  }
 
   // inject current question to DOM and create new question when input = answer
   var renderNewQuestion = function () {
@@ -39,6 +45,7 @@ $(document).ready(function(){
     if(userInput === answer) {
       renderNewQuestion();
       $('#user-input').val('');
+      updateTimeLeft(+1);
     }
   }
   
