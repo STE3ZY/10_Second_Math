@@ -1,6 +1,9 @@
 $(document).ready(function(){
 
   var currentQuestion;
+  var interval;
+  var timeLeft = 10;
+
 
   // generate a random number from 1 to 10
   var randomNumberGenerator = function (size) {
@@ -20,14 +23,21 @@ $(document).ready(function(){
   }
   
   // 10 second timer
-  var timeLeft = 10;
-  var interval = setInterval(function () {
-    updateTimeLeft(-1);
-    $('#time-left').text(timeLeft);
-    if (timeLeft === 0) {
-      clearInterval(interval);
+  var startGame = function () {
+    if (!interval) {
+      // call the updateTimeLeft function if timeLeft is 0
+      if (timeLeft === 0) {
+        updateTimeLeft(10);
+      }
+      interval = setInterval(function () {
+        updateTimeLeft(-1);
+        if (timeLeft === 0) {
+          clearInterval(interval);
+          interval = undefined;
+        }
+      }, 1000);  
     }
-  }, 1000);
+  }
 
   // add one second when user gives right answer
   var updateTimeLeft = function (amount) {
@@ -50,6 +60,7 @@ $(document).ready(function(){
   }
   
   $('#user-input').on('keyup', function () {
+    startGame();
     checkAnswer(Number($(this).val()), currentQuestion.answer);
   });
   
