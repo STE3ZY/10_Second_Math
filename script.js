@@ -3,6 +3,7 @@ $(document).ready(function(){
   var currentQuestion;
   var interval;
   var timeLeft = 10;
+  var score = 0;
 
 
   // generate a random number from 1 to 10
@@ -28,6 +29,7 @@ $(document).ready(function(){
       // call the updateTimeLeft function if timeLeft is 0
       if (timeLeft === 0) {
         updateTimeLeft(10);
+        updateScore(-score);
       }
       interval = setInterval(function () {
         updateTimeLeft(-1);
@@ -56,8 +58,15 @@ $(document).ready(function(){
       renderNewQuestion();
       $('#user-input').val('');
       updateTimeLeft(+1);
+      updateScore(+1);
     }
   }
+
+  // update score
+  var updateScore = function (amount) {
+    score += amount;
+    $('#score').text(score);
+  };
   
   $('#user-input').on('keyup', function () {
     startGame();
