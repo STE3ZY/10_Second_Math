@@ -1,9 +1,13 @@
 $(document).ready(function(){
+
   var currentQuestion;
+
+  // generate a random number from 1 to 10
   var randomNumberGenerator = function (size) {
     return Math.ceil(Math.random() * size);
   }
   
+  // generate an equation question using 2 random numbers from 1 to 10
   var questionGenerator = function () {
     var question = {};
     var num1 = randomNumberGenerator(10);
@@ -15,6 +19,17 @@ $(document).ready(function(){
     return question;
   }
   
+  // inject current question to DOM
   currentQuestion = questionGenerator();
   $('#equation').text(currentQuestion.equation);
+
+  var checkAnswer = function (userInput, answer) {
+    console.log(userInput === answer);
+  }
+  
+  $('#user-input').on('keyup', function () {
+    checkAnswer(Number($(this).val()), currentQuestion.answer);
+  });
+
+
 });
