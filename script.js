@@ -28,6 +28,7 @@ $(document).ready(function(){
   var checkAnswer = function (userInput, answer) {
     if(userInput === answer) {
       renderNewQuestion();
+      $('#user-input').val('');
     }
   }
   
