@@ -19,6 +19,16 @@ $(document).ready(function(){
     return question;
   }
   
+  // 10 second timer
+  var timeLeft = 10;
+  var interval = setInterval(function () {
+    timeLeft--;
+    $('#time-left').text(timeLeft);
+    if (timeLeft === 0) {
+      clearInterval(interval);
+    }
+  }, 1000);
+
   // inject current question to DOM and create new question when input = answer
   var renderNewQuestion = function () {
     currentQuestion = questionGenerator();
