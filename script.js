@@ -7,6 +7,15 @@ $(document).ready(function(){
   var highScore = 0;
   var slider = document.getElementById("slider");
 
+  // If one checkbox is checked, uncheck all the others and restart game
+  $('input[name=question-type]').click(function() {
+    if ($(this).prop('checked')) {
+      $('input[name=question-type]').not(this).prop('checked', false);
+    }
+    restartGame();
+  });
+
+  // getting numbers limit from slider
   slider.addEventListener("input", () => {
     var sliderValue = slider.value;
     restartGame();
@@ -24,8 +33,40 @@ $(document).ready(function(){
     var num1 = randomNumberGenerator(sliderValue);
     var num2 = randomNumberGenerator(sliderValue);
     
-    question.answer = num1 + num2;
-    question.equation = String(num1) + " + " + String(num2);
+    // get the selected question types
+    var selectedTypes = $('input[name=question-type]:checked').map(function() {
+      return $(this).val();
+    }).get();
+    
+    // choose a random question type
+    var questionType = selectedTypes[Math.floor(Math.random() * selectedTypes.length)];
+
+    
+    // generate a question based on the selected type
+    if (questionType === 'addition') {
+      question.answer = num1 + num2;
+      question.equation = String(num1) + " + " + String(num2);
+    } else if (questionType === 'subtraction') {
+      if (num1 < num2) {
+        // swap the numbers if num1 is less than num2
+        var temp = num1;
+        num1 = num2;
+        num2 = temp;
+      }
+      question.answer = num1 - num2;
+      question.equation = String(num1) + " - " + String(num2);
+    } else if (questionType === 'multiplication') {
+      question.answer = num1 * num2;
+      question.equation = String(num1) + " × " + String(num2);
+    } else if (questionType === 'division') {
+      // generate a new set of numbers if the answer is not a whole number or if num1 is less than num2
+      while (num1 % num2 !== 0 || num1 < num2) {
+        num1 = randomNumberGenerator(sliderValue);
+        num2 = randomNumberGenerator(sliderValue);
+      }
+      question.answer = num1 / num2;
+      question.equation = String(num1) + " ÷ " + String(num2);
+    }
     
     return question;
   }
