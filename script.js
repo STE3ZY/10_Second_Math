@@ -4,6 +4,7 @@ $(document).ready(function(){
   var interval;
   var timeLeft = 10;
   var score = 0;
+  var highScore = 0;
   var slider = document.getElementById("slider");
 
   slider.addEventListener("input", () => {
@@ -72,6 +73,10 @@ $(document).ready(function(){
   var updateScore = function (amount) {
     score += amount;
     $('#score').text(score);
+    if (score > highScore) {
+      highScore = score;
+      $('#high-score').text(highScore);
+    }
   };
 
   // restart game when slider value changes
@@ -80,6 +85,7 @@ $(document).ready(function(){
     interval = undefined;
     timeLeft = 10;
     score = 0;
+    highScore = 0;
     updateScore(score);
     updateTimeLeft(0);
     renderNewQuestion();
