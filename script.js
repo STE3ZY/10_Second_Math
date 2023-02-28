@@ -7,12 +7,83 @@ $(document).ready(function(){
   var highScore = 0;
   var slider = document.getElementById("slider");
 
-  // If one checkbox is checked, uncheck all the others and restart game
-  $('input[name=question-type]').click(function() {
-    if ($(this).prop('checked')) {
-      $('input[name=question-type]').not(this).prop('checked', false);
+  // calculator input
+  function setupCalculatorInput() {
+  // Get all the calculator buttons
+  const buttons = $('.calc-button');
+
+  // Add a click event listener to each button
+  buttons.on('click', function() {
+    const input = $('#user-input');
+    const button = $(this);
+
+    // If the button is the clear button, clear the input field
+    if (button.hasClass('is-clear')) {
+      input.val('');
+    } 
+    // If the button is the equals button, evaluate the input value as a math expression
+    else if (button.hasClass('add')) {
+      $('input[type="checkbox"][value="addition"]').prop('checked', true);
+      $('input[type="checkbox"][value="subtraction"]').prop('checked', false);
+      $('input[type="checkbox"][value="multiplication"]').prop('checked', false);
+      $('input[type="checkbox"][value="division"]').prop('checked', false);
+      restartGame();
     }
-    restartGame();
+    else if (button.hasClass('subtract')) {
+      $('input[type="checkbox"][value="addition"]').prop('checked', false);
+      $('input[type="checkbox"][value="subtraction"]').prop('checked', true);
+      $('input[type="checkbox"][value="multiplication"]').prop('checked', false);
+      $('input[type="checkbox"][value="division"]').prop('checked', false);
+      restartGame();
+    }
+    else if (button.hasClass('multiply')) {
+      $('input[type="checkbox"][value="addition"]').prop('checked', false);
+      $('input[type="checkbox"][value="subtraction"]').prop('checked', false);
+      $('input[type="checkbox"][value="multiplication"]').prop('checked', true);
+      $('input[type="checkbox"][value="division"]').prop('checked', false);
+      restartGame();
+    }
+    else if (button.hasClass('divide')) {
+      $('input[type="checkbox"][value="addition"]').prop('checked', false);
+      $('input[type="checkbox"][value="subtraction"]').prop('checked', false);
+      $('input[type="checkbox"][value="multiplication"]').prop('checked', false);
+      $('input[type="checkbox"][value="division"]').prop('checked', true);
+      restartGame();
+    }
+      
+    // Otherwise, append the button value to the input field
+    else {
+      input.val(input.val() + button.text());
+    }
+  });
+  }
+
+  setupCalculatorInput();
+
+  // activating buttons
+  $('.add').on('click', function() {
+    // Remove active class from all buttons
+    $('.calc-button').removeClass('active');
+    // Add the "active" class to the button
+    $(this).addClass('active');
+  });
+  $('.subtract').on('click', function() {
+    // Remove active class from all buttons
+    $('.calc-button').removeClass('active');
+    // Add the "active" class to the button
+    $(this).addClass('active');
+  });
+  $('.multiply').on('click', function() {
+    // Remove active class from all buttons
+    $('.calc-button').removeClass('active');
+    // Add the "active" class to the button
+    $(this).addClass('active');
+  });
+  $('.divide').on('click', function() {
+    // Remove active class from all buttons
+    $('.calc-button').removeClass('active');
+    // Add the "active" class to the button
+    $(this).addClass('active');
   });
 
   // getting numbers limit from slider
@@ -45,7 +116,7 @@ $(document).ready(function(){
     // generate a question based on the selected type
     if (questionType === 'addition') {
       question.answer = num1 + num2;
-      question.equation = String(num1) + " + " + String(num2);
+      question.equation = "Solve: " + String(num1) + " + " + String(num2);
     } else if (questionType === 'subtraction') {
       if (num1 < num2) {
         // swap the numbers if num1 is less than num2
@@ -54,10 +125,10 @@ $(document).ready(function(){
         num2 = temp;
       }
       question.answer = num1 - num2;
-      question.equation = String(num1) + " - " + String(num2);
+      question.equation = "Solve: " + String(num1) + " - " + String(num2);
     } else if (questionType === 'multiplication') {
       question.answer = num1 * num2;
-      question.equation = String(num1) + " × " + String(num2);
+      question.equation = "Solve: " + String(num1) + " × " + String(num2);
     } else if (questionType === 'division') {
       // generate a new set of numbers if the answer is not a whole number or if num1 is less than num2
       while (num1 % num2 !== 0 || num1 < num2) {
@@ -65,7 +136,7 @@ $(document).ready(function(){
         num2 = randomNumberGenerator(sliderValue);
       }
       question.answer = num1 / num2;
-      question.equation = String(num1) + " ÷ " + String(num2);
+      question.equation = "Solve: " + String(num1) + " ÷ " + String(num2);
     }
     
     return question;
@@ -102,7 +173,7 @@ $(document).ready(function(){
   }
   
   var checkAnswer = function (userInput, answer) {
-    if(userInput === answer) {
+    if(Number(userInput) === answer) {
       renderNewQuestion();
       $('#user-input').val('');
       updateTimeLeft(+1);
@@ -132,11 +203,23 @@ $(document).ready(function(){
     renderNewQuestion();
   }
   
-  $('#user-input').on('keyup', function () {
-    startGame();
-    checkAnswer(Number($(this).val()), currentQuestion.answer);
+  // Attach click event listener to all elements with class "answer-button"
+  $('.answer-button').on('click', function () {
+  // Start the game
+  startGame();
+  // Call the checkAnswer function with the button value and the current question answer
+  checkAnswer(Number($('#user-input').val()), currentQuestion.answer);
   });
-  
+
+  // Attach keyup event listener to the input field
+  $('#user-input').on('keyup', function () {
+  // Start the game
+  startGame();
+  // Call the checkAnswer function with the input field value and the current question answer
+  checkAnswer(Number($(this).val()), currentQuestion.answer);
+  });
+
+
   renderNewQuestion();
 
 });
