@@ -1,9 +1,120 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+@font-face {
+  font-family: 'Digital7';
+  src: url('fonts/Digital7-rg1mL.ttf') format('truetype');
+}
+
+/* calculator */
+
+/* quick reset so all our padding is the right size */
+* {
+  box-sizing: border-box;
+}
+
+/* add some spacing */
+body          {
+  background: #F6F6F6;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+h1 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+/* limit the width and center */
+.calculator   {
+  background: #433c5e;
+  padding:0 10px;
+  max-width: 400px;
+  margin: 0 auto;
+  border: 2px solid #111;
+  border-radius: 15px;
+}
+
+.calc-button  {
+  background: #7b7c91;
+  border: 1px solid #111; /* black border */
+  padding: 20px;
+  color: #EEE; /* white text */
+  border-radius: 5px; /* rounded corners */
+  font-size: 22px; /* larger fonts */
+  cursor: pointer; /* make it look clickable */
+}
+
+#user-input  {
+  /* reset basic form styles */
+  font-family: 'Digital7', sans-serif;
+  background: #d4e2e3;
+  box-shadow: none;
+  outline: none;
+  width: 100%;
+  border: 10px solid #757aa0;
+  color: #333;
+  text-align: right;
+  font-size: 80px;
+  line-height: 80px;
+  border-radius: 5px;
+}
+
+.title {
+  font-size: large;
+  font-weight: 700;
+  color: #b8b6bb;
+  padding: 10px;
+  background: #433c5e;
+}
+
+.calculator-buttons {
+  background: #433c5e;
+  /* small spacing within our container */
+  padding: 20px;
+
+  /* the grid stuff! */
+  display: grid;
+
+    /* add the grid gap */
+  grid-gap: 15px;
+  
+}
+
+/* span across 3 columns */
+.is-clear   {
+  grid-column: span 3;
+}
+
+.is-zero {
+  grid-column: span 4;
+}
+
+.is-clear   {
+  background: #a9536c;
+}
+
+.active {
+  background-color: #8496fa;
+}
+
+
+
 datalist {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   writing-mode: vertical-lr;
-  width: 400px;
+  width: 250px;
 }
 
 option {
@@ -11,6 +122,28 @@ option {
 }
 
 input[type="range"] {
-  width: 400px;
+  width: 250px;
   margin: 0;
+}
+
+.q-type {
+  display: none;
+}
+
+.eq-timer {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.scoring {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#time-left {
+  font-size: 2em;
 }
