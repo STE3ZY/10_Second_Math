@@ -59,6 +59,7 @@ $(document).ready(function(){
   }
 
   setupCalculatorInput();
+  // make addition the default mode when page loads
   $('input[type="checkbox"][value="addition"]').prop('checked', true);
   $('input[type="checkbox"][value="subtraction"]').prop('checked', false);
   $('input[type="checkbox"][value="multiplication"]').prop('checked', false);
