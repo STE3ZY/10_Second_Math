@@ -59,8 +59,12 @@ $(document).ready(function(){
   }
 
   setupCalculatorInput();
-
-  // activating buttons
+  // make addition the default mode when page loads
+  $('input[type="checkbox"][value="addition"]').prop('checked', true);
+  $('input[type="checkbox"][value="subtraction"]').prop('checked', false);
+  $('input[type="checkbox"][value="multiplication"]').prop('checked', false);
+  $('input[type="checkbox"][value="division"]').prop('checked', false);
+  $('.add').addClass('active');  // activating buttons
   $('.add').on('click', function() {
     // Remove active class from all buttons
     $('.calc-button').removeClass('active');
