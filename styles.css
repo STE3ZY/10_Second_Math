@@ -157,7 +157,7 @@ input[type="range"] {
 
 @media only screen and (min-width: 768px) {
   #equation {
-    font-size: 3em;
+    font-size: 2.8em;
     font-weight: 700;
   }
   .row {
